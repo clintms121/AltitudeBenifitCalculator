@@ -6,35 +6,36 @@
     <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
 </head>
 <body>
-    <div class="container"></div>
-    <h1>Altitude Benefit Calculator</h1>
+    <div class="container">
+        <h1>Altitude Benefit Calculator</h1>
 
-    <form method="POST">
-        <div class="form-group">
-            <label for="altitude">Altitude (feet):</label>
-            <input type="number" id="altitude" name="altitude" required
-                   min="4000" max="9000" step="1000">
+        <form method="POST" action="/">
+            <div class="form-group">
+                <label for="altitude">Altitude (feet):</label>
+                <input type="number" id="altitude" name="altitude" required
+                       min="4000" max="9000" step="1000">
+            </div>
+
+            <div class="form-group">
+                <label for="duration">Duration (weeks):</label>
+                <input type="number" id="duration" name="duration" required
+                       min="1" max="4">
+            </div>
+
+            <button type="submit">Calculate</button>
+        </form>
+
+        {% if error %}
+        <div class="error">
+            {{ error }}
         </div>
+        {% endif %}
 
-        <div class="form-group">
-            <label for="duration">Duration (weeks):</label>
-            <input type="number" id="duration" name="duration" required
-                   min="1" max="4">
+        {% if result %}
+        <div class="result">
+            You will see a {{ result }}% increase in RBC!
         </div>
-
-        <button type="submit">Caluclate</button>
-    </form>
-
-{% if error %}
-<div class="error">
-    {{ error }}
-</div>
-    {% endif %}
-
-{% if result %}
-<div class="result">
-    You will see a {{ result }}% increase in RBC!
-</div>
-{% endif %}
+        {% endif %}
+    </div>
 </body>
 </html>
