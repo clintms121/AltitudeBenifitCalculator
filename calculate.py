@@ -1,9 +1,35 @@
+from contextlib import nullcontext
+
+
 def round_to_nearest_1000(x):
     return round(x/1000) * 1000
 
-    
+def time_to_minutes(hours, minutes, seconds):
+    return hours * 60 + minutes + seconds / 60
+
+def pace_to_minutes(pace_str):
+    mins, secs = map(int, pace_str.strip().split(':'))
+    return mins + secs / 60
+
+# Pace calculator logic as function
+def pace_calculator(distance, time=None, pace=None, unit='mile'):
+    if time:
+        total_minutes = time_to_minutes(*time)
+    elif pace:
+        pace_minutes = pace_to_minutes(pace)
+        total_minutes = distance * pace_minutes
+    else:
+        return "You must provide either time or pace."
+
+    hours = total_minutes / 60
+    speed = distance / hours
+
+    unit_label = "mph" if unit == "mile" else "kph"
+    return f"Speed: {speed:.2f} {unit_label}"
+
+
 # Altitude benefit calculation logic as a function
-def AltitudeCalculator(altitude, duration):
+def altitude_calculator(altitude, duration):
     altitude_base = {
         4000: 0.3,
         5000: 0.5,
@@ -30,3 +56,4 @@ def AltitudeCalculator(altitude, duration):
         return None, "Please enter valid numeric values."
     except Exception as e:
         return None, f"An unexpected error occurred: {e}"
+

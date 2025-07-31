@@ -2,40 +2,46 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>Altitude Benefit Calculator</title>
+    <title>RunFax</title>
     <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
 </head>
 <body>
     <div class="container">
-        <h1>RunFax</h1>
+        <h1>Altitude Benefit Calculator</h1>
 
-        <form method="POST" action="/">
-            <div class="form-group">
-                <label for="altitude">Altitude (feet):</label>
-                <input type="number" id="altitude" name="altitude" required
-                       min="4000" max="9000" step="1000">
-            </div>
+        <form method="POST">
+    <input type="hidden" name="form_type" value="altitude">
+    Altitude (ft): <input type="text" name="altitude">
+    Duration (weeks): <input type="text" name="duration">
+    <input type="submit" value="Calculate Altitude Benefit">
+</form>
 
-            <div class="form-group">
-                <label for="duration">Duration (weeks):</label>
-                <input type="number" id="duration" name="duration" required
-                       min="1" max="4">
-            </div>
+<form method="POST">
+    <input type="hidden" name="form_type" value="pace">
+    Distance: <input type="text" name="distance">
+    Time - Hours: <input type="text" name="hours">
+    Minutes: <input type="text" name="minutes">
+    Seconds: <input type="text" name="seconds"><br>
+    OR Pace (MM:SS): <input type="text" name="pace"><br>
+    Unit:
+    <select name="unit">
+        <option value="mile">Mile</option>
+        <option value="km">Kilometer</option>
+    </select>
+    <input type="submit" value="Calculate Pace">
+</form>
 
-            <button type="submit">Calculate</button>
-        </form>
+{% if altitude_result %}
+    <p><strong>Altitude Benefit:</strong> {{ altitude_result }}%</p>
+{% endif %}
 
-        {% if error %}
-        <div class="error">
-            {{ error }}
-        </div>
-        {% endif %}
+{% if pace_result %}
+    <p><strong>Pace Result:</strong> {{ pace_result }}</p>
+{% endif %}
 
-        {% if result %}
-        <div class="result">
-            You will see a {{ result }}% increase in RBC!
-        </div>
-        {% endif %}
+{% if error %}
+    <p style="color: red;">{{ error }}</p>
+{% endif %}
     </div>
 </body>
 </html>
