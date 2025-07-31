@@ -40,7 +40,7 @@ def index():
             except Exception as e:
                 error = f"Invalid input: {e}"
 
-        return render_template('index.html', altitude_result=altitude_result, pace_result=pace_result, error=error)
+        return render_template("index.html", altitude_result=altitude_result, pace_result=pace_result, error=error)
 
 
 
