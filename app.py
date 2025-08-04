@@ -14,20 +14,17 @@ def index():
     if request.method == 'POST':
         form_type = request.form.get('form_type')
 
-        if form_type == 'altitude: ':
-            form_type = request.form.get('form_type')
-
-            if form_type == 'altitude':
-                altitude = request.form.get('altitude', '')
-                duration = request.form.get('duration', '')
-                if altitude and duration:
-                    altitude_result, error = altitude_calculator(altitude, duration)
-                else:
-                    error = "Please enter both altitude and duration."
+        if form_type == 'altitude':
+            altitude = request.form.get('altitude', '')
+            duration = request.form.get('duration', '')
+            if altitude and duration:
+                altitude_result, error = altitude_calculator(altitude, duration)
+            else:
+                error = "Please enter both altitude and duration."
 
         elif form_type == 'pace':
             distance = request.form.get('distance', '')
-            time_h = request.form.get('hours, ')
+            time_h = request.form.get('hours', '')
             time_m = request.form.get('minutes', '')
             time_s = request.form.get('seconds', '')
             pace_str = request.form.get('pace', '')
@@ -40,9 +37,8 @@ def index():
             except Exception as e:
                 error = f"Invalid input: {e}"
 
-        return render_template("index.html", altitude_result=altitude_result, pace_result=pace_result, error=error)
 
-
+    return render_template("index.html", altitude_result=altitude_result, pace_result=pace_result, error=error)
 
 
 if __name__ == '__main__':
