@@ -49,7 +49,7 @@ def altitude_calculator(altitude, duration):
         if altitude in altitude_base:
             base_percent = altitude_base[altitude]
             total_increase = base_percent * duration
-            return round(total_increase, 2), None, " increase in RBC"
+            return f"{round(total_increase, 2)} increase in RBC", None
         else:
             return None, "Invalid altitude entered."
     except ValueError:
