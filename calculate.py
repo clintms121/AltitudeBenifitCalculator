@@ -37,13 +37,11 @@ def pace_calculator(distance, time=None, pace=None, unit='mile'):
 
     # Calculate speed
     hours = total_minutes / 60
-    speed = distance / hours
     unit_label = "mph" if unit == "mile" else "kph"
 
     return {
         "pace": f"{minutes_to_pace_str(pace_minutes)} per {unit}",
         "time": minutes_to_time_str(total_minutes),
-        "speed": f"{speed:.2f} {unit_label}"
     }
 
 # Altitude benefit calculation logic as a function
