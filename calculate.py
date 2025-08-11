@@ -4,29 +4,47 @@ from contextlib import nullcontext
 def round_to_nearest_1000(x):
     return round(x/1000) * 1000
 
-def time_to_minutes(hours, minutes, seconds):
-    return hours * 60 + minutes + seconds / 60
-
-def pace_to_minutes(pace_str):
-    mins, secs = map(int, pace_str.strip().split(':'))
-    return mins + secs / 60
-
 # Pace calculator logic as function
 def pace_calculator(distance, time=None, pace=None, unit='mile'):
+
+    def time_to_minutes(hours, minutes, seconds):
+        return hours * 60 + minutes + seconds / 60
+
+    def pace_to_minutes(pace_str):
+        mins, secs = map(int, pace_str.strip().split(':'))
+        return mins + secs / 60
+
+    def minutes_to_pace_str(minutes_val):
+        mins = int(minutes_val)
+        secs = round((minutes_val - mins) * 60)
+        return f"{mins}:{secs:02d}"
+
+    def minutes_to_time_str(total_minutes):
+        hours = int(total_minutes // 60)
+        mins = int(total_minutes % 60)
+        secs = round((total_minutes * 60) % 60)
+        return f"{hours}h {mins}m {secs}s"
+
+    # Compute total minutes
     if time:
         total_minutes = time_to_minutes(*time)
+        pace_minutes = total_minutes / distance
     elif pace:
         pace_minutes = pace_to_minutes(pace)
         total_minutes = distance * pace_minutes
     else:
-        return "You must provide either time or pace."
+        raise ValueError("You must provide either time or pace.")
 
+    # Calculate speed
     hours = total_minutes / 60
     speed = distance / hours
-
     unit_label = "mph" if unit == "mile" else "kph"
-    return f"Speed: {speed:.2f} {unit_label}"
 
+    return {
+        "pace": f"{minutes_to_pace_str(pace_minutes)} per {unit}",
+        "time": minutes_to_time_str(total_minutes),
+        "speed": f"{speed:.2f} {unit_label}"
+    }
 
 # Altitude benefit calculation logic as a function
 def altitude_calculator(altitude, duration):
