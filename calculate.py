@@ -6,7 +6,6 @@ def round_to_nearest_1000(x):
 
 # Pace calculator logic as function
 def pace_calculator(distance, time=None, pace=None, unit='mile'):
-
     def time_to_minutes(hours, minutes, seconds):
         return hours * 60 + minutes + seconds / 60
 
@@ -19,30 +18,16 @@ def pace_calculator(distance, time=None, pace=None, unit='mile'):
         secs = round((minutes_val - mins) * 60)
         return f"{mins}:{secs:02d}"
 
-    def minutes_to_time_str(total_minutes):
-        hours = int(total_minutes // 60)
-        mins = int(total_minutes % 60)
-        secs = round((total_minutes * 60) % 60)
-        return f"{hours}h {mins}m {secs}s"
-
-    # Compute total minutes
     if time:
         total_minutes = time_to_minutes(*time)
         pace_minutes = total_minutes / distance
     elif pace:
         pace_minutes = pace_to_minutes(pace)
-        total_minutes = distance * pace_minutes
     else:
         raise ValueError("You must provide either time or pace.")
 
-    # Calculate speed
-    hours = total_minutes / 60
-    unit_label = "mph" if unit == "mile" else "kph"
+    return f"{minutes_to_pace_str(pace_minutes)} per {unit}"
 
-    return {
-        "pace": f"{minutes_to_pace_str(pace_minutes)} per {unit}",
-
-    }
 
 # Altitude benefit calculation logic as a function
 def altitude_calculator(altitude, duration):
