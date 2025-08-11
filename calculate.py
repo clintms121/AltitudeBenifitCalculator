@@ -41,7 +41,7 @@ def pace_calculator(distance, time=None, pace=None, unit='mile'):
 
     return {
         "pace": f"{minutes_to_pace_str(pace_minutes)} per {unit}",
-        "time": minutes_to_time_str(total_minutes),
+
     }
 
 # Altitude benefit calculation logic as a function
